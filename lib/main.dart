@@ -1,4 +1,5 @@
 import 'package:ayna_chat/firebase_options.dart';
+import 'package:ayna_chat/sqlite/database_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ayna_chat/router/routes.dart' as router;
@@ -8,7 +9,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  ChatDB().initializeDatabase();
   runApp(const MyApp());
 }
 

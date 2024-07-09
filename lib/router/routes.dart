@@ -1,6 +1,7 @@
 import 'package:ayna_chat/screens/home.dart';
 import 'package:ayna_chat/auth/ui/login.dart';
 import 'package:ayna_chat/auth/ui/signup.dart';
+import 'package:ayna_chat/screens/personal_data.dart';
 import 'package:ayna_chat/screens/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
@@ -21,6 +22,10 @@ var routes = [
   GoRoute(
     path: '/signup',
     builder: (context, state) => const SignupPage(),
+  ),
+  GoRoute(
+    path: '/personal',
+    builder: (context, state) => const FillPersonalData(),
   ),
 ];
 final appRouter = GoRouter(
