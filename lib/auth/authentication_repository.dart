@@ -24,7 +24,7 @@ class AuthenticationRepository {
 
       return result.user;
     } on FirebaseAuthException catch (e) {
-      functions.showSnackbarWithColor(context, e.code, Colors.teal);
+      functions.showSnackbarWithColor(context, e.code, Colors.red);
     }
   }
 
@@ -39,7 +39,7 @@ class AuthenticationRepository {
       );
       return result.user;
     } on FirebaseAuthException catch (e) {
-      functions.showSnackbarWithColor(context, e.code, Colors.teal);
+      functions.showSnackbarWithColor(context, e.code, Colors.red);
     }
   }
 

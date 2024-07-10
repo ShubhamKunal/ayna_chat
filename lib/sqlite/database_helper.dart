@@ -8,6 +8,7 @@ class ChatDB {
   final String databaseName = 'db1';
   final String chatTableName = 'chat1';
   final String userTableName = 'user2';
+  final String echoTableName = 'echo1';
 
   Future<Database> get database async {
     if (_database != null) {

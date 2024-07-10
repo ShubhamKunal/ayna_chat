@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class ChatWithReceiver extends StatefulWidget {
   String receiver;
@@ -133,21 +134,24 @@ class _ChatWithReceiverState extends State<ChatWithReceiver> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.75,
+                            Expanded(
                               child: CustomTextFormField(
                                   controller: messageController,
                                   hintText: "Write a message",
                                   obscureText: false),
                             ),
-                            CustomSmallButton(
-                                text: "Send",
-                                onPressed: () {
-                                  chatBloc.add(ChatSendEvent(
-                                      receiver: widget.receiver,
-                                      text: messageController.text));
-                                  messageController.clear();
-                                })
+                            IconButton(
+                              icon: Icon(
+                                Icons.send,
+                                color: HexColor("3E60AD"),
+                              ),
+                              onPressed: () {
+                                chatBloc.add(ChatSendEvent(
+                                    receiver: widget.receiver,
+                                    text: messageController.text));
+                                messageController.clear();
+                              },
+                            ),
                           ],
                         ),
                         const SizedBox(height: 8),

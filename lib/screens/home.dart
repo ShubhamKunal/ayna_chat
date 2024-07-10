@@ -1,21 +1,14 @@
-import 'package:ayna_chat/auth/authentication_repository.dart';
-import 'package:ayna_chat/chat/bloc/chat_bloc.dart';
 import 'package:ayna_chat/chat/ui/all_chats.dart';
-import 'package:ayna_chat/chat/ui/chat_tile.dart';
 import 'package:ayna_chat/chat/ui/new_chat.dart';
-import 'package:ayna_chat/screens/personal_data.dart';
+import 'package:ayna_chat/chat/ui/new_echo.dart';
 import 'package:ayna_chat/sqlite/database_helper.dart';
-import 'package:ayna_chat/websocket/websocket_services.dart';
-import 'package:ayna_chat/widgets/custom_long_button.dart';
 import 'package:ayna_chat/widgets/custom_small_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:ayna_chat/widgets/logout_button.dart';
 import 'package:ayna_chat/widgets/text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:developer';
-import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,8 +29,12 @@ class _HomePageState extends State<HomePage> {
   void navigateToChat() async {
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const NewChat()),
+      MaterialPageRoute(builder: (context) => const NewEcho()),
     );
+    // final result = await Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const NewChat()),
+    // );
 
     if (result == true) {
       log("triggered");

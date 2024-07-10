@@ -73,7 +73,7 @@ class _SignupPageState extends State<SignupPage> {
                                   password: passwordController.text));
                             } else {
                               functions.showSnackbarWithColor(context,
-                                  "passwords do not match", Colors.teal);
+                                  "passwords do not match", Colors.red);
                             }
                           }),
                   const SizedBox(height: 8),
