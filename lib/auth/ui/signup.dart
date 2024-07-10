@@ -49,12 +49,12 @@ class _SignupPageState extends State<SignupPage> {
                   CustomTextFormField(
                       controller: passwordController,
                       hintText: "Password",
-                      obscureText: false),
+                      obscureText: true),
                   const SizedBox(height: 8),
                   CustomTextFormField(
                       controller: confirmPasswordController,
                       hintText: "Confirm Password",
-                      obscureText: false),
+                      obscureText: true),
                   const SizedBox(height: 8),
                   (state is AuthenticatingState)
                       ? const Center(

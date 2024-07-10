@@ -47,7 +47,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    chatDB.findUser().then((val) {
+    chatDB
+        .findUserByEmail(FirebaseAuth.instance.currentUser!.email!)
+        .then((val) {
       if (val.isEmpty) {
         log("Empty");
       } else {
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> {
           ? firstScreen
           : Container(
               padding: const EdgeInsets.all(8),
-              margin: EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,6 +102,7 @@ class _HomePageState extends State<HomePage> {
                         text: "Submit",
                         onPressed: () async {
                           await ChatDB().insertUser({
+                            "email": FirebaseAuth.instance.currentUser!.email,
                             "username": usernameController.text,
                             "phone": phoneController.text
                           });

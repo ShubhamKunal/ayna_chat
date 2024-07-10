@@ -7,7 +7,7 @@ class ChatDB {
   static Database? _database;
   final String databaseName = 'db1';
   final String chatTableName = 'chat1';
-  final String userTableName = 'user1';
+  final String userTableName = 'user2';
 
   Future<Database> get database async {
     if (_database != null) {
@@ -25,6 +25,7 @@ class ChatDB {
         await db.execute('''
           CREATE TABLE $userTableName (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT,
             username TEXT,
             phone TEXT
           );
@@ -51,9 +52,14 @@ class ChatDB {
   }
 
   Future<int> insertUser(Map<String, dynamic> row) async {
-    await deleteAllUsers();
     final db = await database;
-    return await db.insert(userTableName, row);
+
+    final rows = await findUserByEmail(row['email']);
+    if (rows.isEmpty) {
+      return await db.insert(userTableName, row);
+    } else {
+      return await updateUserTableByEmail(row);
+    }
   }
 
   Future<List<String>> getDistinctItems(String sender) async {
@@ -85,6 +91,16 @@ class ChatDB {
   Future<List<Map<String, dynamic>>> findUser() async {
     final db = await database;
     return await db.query(userTableName);
+  }
+
+  Future<List<Map<String, dynamic>>> findUserByEmail(String email) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      userTableName,
+      where: 'email = ?',
+      whereArgs: [email],
+    );
+    return maps;
   }
 
   Future<List<Map<String, dynamic>>> findChatByID(int id) async {
@@ -119,13 +135,40 @@ class ChatDB {
     return result;
   }
 
-  Future<int> updateUserTable(Map<String, dynamic> row) async {
+  Future<List<Map<String, dynamic>>> getConversationForUser() async {
+    final db = await database;
+    String user = FirebaseAuth.instance.currentUser!.email ?? "user";
+    final List<Map<String, dynamic>> result = await db.query(
+      chatTableName,
+      where: 'sender = ? OR receiver = ?',
+      whereArgs: [user, user],
+      orderBy: 'id ASC',
+    );
+    return result;
+  }
+
+  Future<List<String>> getDistinctConversationUsers() async {
+    final db = await database;
+    String user = FirebaseAuth.instance.currentUser!.email ?? "user";
+    final List<Map<String, dynamic>> result = await db.rawQuery('''
+      SELECT DISTINCT CASE
+        WHEN sender = ? THEN receiver
+        ELSE sender
+      END AS conversationUser
+      FROM $chatTableName
+      WHERE sender = ? OR receiver = ?
+    ''', [user, user, user]);
+
+    return result.map((row) => row['conversationUser'] as String).toList();
+  }
+
+  Future<int> updateUserTableByEmail(Map<String, dynamic> row) async {
     final db = await database;
     return await db.update(
       userTableName,
       row,
-      where: 'id = ?',
-      whereArgs: [row['id']],
+      where: 'email = ?',
+      whereArgs: [row['email']],
     );
   }
 

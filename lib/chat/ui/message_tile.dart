@@ -39,27 +39,33 @@ class MessageTile extends StatelessWidget {
         ],
       );
     } else {
-      return Column(children: [
-        Container(
-          padding: EdgeInsets.all(15),
-          margin: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(color: Colors.grey.shade300, width: 1.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade200,
-                blurRadius: 5.0,
-                spreadRadius: 2.0,
-                offset: Offset(0, 3),
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(children: [
+            Container(
+              padding: EdgeInsets.all(15),
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(color: Colors.grey.shade300, width: 1.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200,
+                    blurRadius: 5.0,
+                    spreadRadius: 2.0,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: CustomText(text: message, size: 16),
-        ),
-        SizedBox(height: 8),
-      ]);
+              child: CustomText(text: message, size: 16),
+            ),
+            SizedBox(height: 8),
+          ]),
+          SizedBox(),
+        ],
+      );
     }
   }
 }

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ayna_chat/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ import 'package:ayna_chat/widgets/custom_long_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:ayna_chat/widgets/logout_button.dart';
 import 'package:ayna_chat/widgets/text_form_field.dart';
+import 'package:go_router/go_router.dart';
 
 class NewChat extends StatelessWidget {
   const NewChat({
@@ -41,14 +43,16 @@ class NewChat extends StatelessWidget {
                 const SizedBox(height: 8),
                 CustomLongButton(
                     text: "send",
-                    onPressed: () {
-                      ChatDB().insertChat({
+                    onPressed: () async {
+                      await ChatDB().insertChat({
                         "sender":
                             FirebaseAuth.instance.currentUser!.email ?? "user",
                         "receiver": receipentController.text,
                         "text": messageController.text
                       });
-                      Navigator.pop(context, true);
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HomePage()));
                     },
                     bright: false),
               ],

@@ -1,6 +1,8 @@
 import 'package:ayna_chat/router/routes.dart';
+import 'package:ayna_chat/widgets/custom_long_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class Splash extends StatelessWidget {
@@ -10,23 +12,38 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: CustomText(text: "Ayna Chat", size: 22),
+        title: const Center(child: CustomText(text: "Ayna Chat", size: 22)),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        padding: const EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         child: Center(
           child: Column(
             children: [
-              CustomText(text: "You are welcome to Ayna Chat", size: 16),
-              ElevatedButton(
+              const CustomText(text: "Ayna chat connects people!", size: 16),
+              const SizedBox(height: 16),
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: SvgPicture.asset("assets/people_chatting.svg")),
+              const SizedBox(height: 16),
+              const CustomText(
+                  text: "If you already have an account", size: 16),
+              const SizedBox(height: 16),
+              CustomLongButton(
+                  text: "Login",
                   onPressed: () {
                     context.go("/login");
                   },
-                  child: CustomText(text: "Login", size: 20)),
-              ElevatedButton(
+                  bright: false),
+              const SizedBox(height: 16),
+              const CustomText(text: "If you are new here", size: 16),
+              const SizedBox(height: 16),
+              CustomLongButton(
+                  text: "Sign up",
                   onPressed: () {
                     context.go("/signup");
                   },
-                  child: CustomText(text: "Signup", size: 20)),
+                  bright: true),
             ],
           ),
         ),

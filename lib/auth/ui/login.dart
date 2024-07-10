@@ -1,6 +1,7 @@
 import 'package:ayna_chat/auth/authentication_repository.dart';
 import 'package:ayna_chat/auth/bloc/auth_bloc.dart';
 import 'package:ayna_chat/router/routes.dart';
+import 'package:ayna_chat/widgets/custom_colored_text.dart';
 import 'package:ayna_chat/widgets/custom_long_button.dart';
 import 'package:ayna_chat/widgets/custom_small_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
@@ -37,44 +38,42 @@ class _LoginPageState extends State<LoginPage> {
           appBar: AppBar(
             title: const CustomText(text: "Login", size: 22),
           ),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  CustomTextFormField(
-                      controller: emailController,
-                      hintText: "Email",
-                      obscureText: false),
-                  const SizedBox(height: 8),
-                  CustomTextFormField(
-                      controller: passwordController,
-                      hintText: "Password",
-                      obscureText: true),
-                  const SizedBox(height: 8),
-                  (state is AuthenticatingState)
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : CustomLongButton(
-                          text: "Submit",
-                          bright: false,
-                          onPressed: () {
-                            log("email:${emailController.text} pass:${passwordController.text}");
-                            authbloc.add(AuthenticateEvent(
-                                context: context,
-                                email: emailController.text,
-                                password: passwordController.text));
-                          }),
-                  const SizedBox(height: 8),
-                  TextButton(
-                      onPressed: () {
-                        context.go("/signup");
-                      },
-                      child: const CustomText(
-                          text: "Create Account Instead", size: 18))
-                ],
-              ),
+          body: Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                CustomTextFormField(
+                    controller: emailController,
+                    hintText: "Email",
+                    obscureText: false),
+                const SizedBox(height: 8),
+                CustomTextFormField(
+                    controller: passwordController,
+                    hintText: "Password",
+                    obscureText: true),
+                const SizedBox(height: 8),
+                (state is AuthenticatingState)
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : CustomLongButton(
+                        text: "Submit",
+                        bright: false,
+                        onPressed: () {
+                          log("email:${emailController.text} pass:${passwordController.text}");
+                          authbloc.add(AuthenticateEvent(
+                              context: context,
+                              email: emailController.text,
+                              password: passwordController.text));
+                        }),
+                const SizedBox(height: 8),
+                TextButton(
+                    onPressed: () {
+                      context.go("/signup");
+                    },
+                    child: const CustomText(
+                        text: "Create Account Instead", size: 18))
+              ],
             ),
           ),
         );

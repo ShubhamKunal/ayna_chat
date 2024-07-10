@@ -23,11 +23,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     emit(ChatLoadingState());
     await Future.delayed(const Duration(seconds: 2));
     try {
-      await ChatDB()
-          .getDistinctItems(FirebaseAuth.instance.currentUser!.email ?? "user")
-          .then((receivers) {
-        log("Receivers length:${receivers.length}");
-        myReceivers.addAll(receivers);
+      await ChatDB().getDistinctConversationUsers().then((conversations) {
+        myReceivers.addAll(conversations);
       });
     } catch (e) {
       emit(ChatErrorState());
@@ -38,6 +35,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   Future<void> chatSendEvent(
       ChatSendEvent event, Emitter<ChatState> emit) async {
     emit(ChatSendingState());
+    List conversation = [];
     //TODO: SENDING OF CHAT
     try {
       await ChatDB().insertChat({
@@ -48,7 +46,23 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     } catch (e) {
       emit(ChatErrorState());
     }
-    emit(ChatSentState());
+    try {
+      await ChatDB()
+          .getConversation(
+              FirebaseAuth.instance.currentUser!.email!, event.receiver)
+          .then((messages) {
+        messages.forEach((message) {
+          if (message['sender'] == event.receiver) {
+            conversation.add("${event.receiver}: ${message['text']}");
+          } else {
+            conversation.add("You: ${message['text']}");
+          }
+        });
+      });
+    } catch (e) {
+      emit(ChatErrorState());
+    }
+    emit(ChatSentState(conversation: conversation));
   }
 
   Future<void> chatSessionEvent(

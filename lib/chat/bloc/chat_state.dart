@@ -19,7 +19,12 @@ class ChatErrorState extends ChatState {}
 
 class ChatSendingState extends ChatState {}
 
-class ChatSentState extends ChatState {}
+class ChatSentState extends ChatState {
+  List conversation;
+  ChatSentState({
+    required this.conversation,
+  });
+}
 
 class ChatSessionLoadedState extends ChatState {
   List conversation;

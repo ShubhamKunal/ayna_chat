@@ -16,16 +16,16 @@ class CustomLongButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      padding: const EdgeInsets.only(right: 16, left: 16),
-      decoration: BoxDecoration(
-        color: HexColor("#3E60AD"),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: GestureDetector(
-        onTap: onPressed,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        padding: const EdgeInsets.only(right: 16, left: 16),
+        decoration: BoxDecoration(
+          color: HexColor("#3E60AD"),
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
