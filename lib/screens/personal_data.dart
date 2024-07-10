@@ -20,7 +20,6 @@ class _FillPersonalDataState extends State<FillPersonalData> {
   ChatDB chatDB = ChatDB();
   @override
   void initState() {
-    log("abc");
     chatDB.findUser().then((val) {
       if (val.isEmpty) {
         log("Empty");
@@ -34,19 +33,7 @@ class _FillPersonalDataState extends State<FillPersonalData> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const CustomText(text: "Personal Data", size: 22),
-        actions: [
-          const CustomText(text: "Logout", size: 16),
-          IconButton(
-              onPressed: () {
-                AuthenticationRepository().logOut(context);
-              },
-              icon: const Icon(Icons.logout))
-        ],
-      ),
-      body: Container(
+    return Container(
         padding: const EdgeInsets.all(8),
         margin: EdgeInsets.all(8),
         child: SingleChildScrollView(
@@ -66,17 +53,14 @@ class _FillPersonalDataState extends State<FillPersonalData> {
               const SizedBox(height: 8),
               CustomSmallButton(
                   text: "Submit",
-                  onPressed: () {
-                    ChatDB().insertUser({
+                  onPressed: () async {
+                    await ChatDB().insertUser({
                       "username": usernameController.text,
                       "phone": phoneController.text
                     });
-                    Navigator.pop(context);
                   })
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:developer';
@@ -55,6 +56,17 @@ class ChatDB {
     return await db.insert(userTableName, row);
   }
 
+  Future<List<String>> getDistinctItems(String sender) async {
+    final db = await database;
+    final maps = await db.rawQuery(
+        'SELECT DISTINCT receiver FROM $chatTableName WHERE sender = ?',
+        [sender]);
+
+    return List.generate(maps.length, (i) {
+      return maps[i]['receiver'] as String;
+    });
+  }
+
   Future<int> deleteAllChats() async {
     final db = await database;
     return await db.delete(chatTableName);
@@ -95,14 +107,16 @@ class ChatDB {
     return maps;
   }
 
-  Future<List<Map<String, dynamic>>> findChatByReceiver(String receiver) async {
+  Future<List<Map<String, dynamic>>> getConversation(
+      String user1, String user2) async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query(
+    final List<Map<String, dynamic>> result = await db.query(
       chatTableName,
-      where: 'receiver = ?',
-      whereArgs: [receiver],
+      where: '(sender = ? AND receiver = ?) OR (sender = ? AND receiver = ?)',
+      whereArgs: [user1, user2, user2, user1],
+      orderBy: 'id ASC',
     );
-    return maps;
+    return result;
   }
 
   Future<int> updateUserTable(Map<String, dynamic> row) async {

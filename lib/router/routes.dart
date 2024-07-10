@@ -1,3 +1,4 @@
+import 'package:ayna_chat/chat/ui/new_chat.dart';
 import 'package:ayna_chat/screens/home.dart';
 import 'package:ayna_chat/auth/ui/login.dart';
 import 'package:ayna_chat/auth/ui/signup.dart';
@@ -26,6 +27,10 @@ var routes = [
   GoRoute(
     path: '/personal',
     builder: (context, state) => const FillPersonalData(),
+  ),
+  GoRoute(
+    path: '/newchat',
+    builder: (context, state) => const NewChat(),
   ),
 ];
 final appRouter = GoRouter(
