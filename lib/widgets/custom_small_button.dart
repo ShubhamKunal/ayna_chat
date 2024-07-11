@@ -7,17 +7,17 @@ class CustomSmallButton extends StatelessWidget {
   final dynamic text;
   final Function() onPressed;
   const CustomSmallButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: values.buttonColor,
-        fixedSize: MaterialStateProperty.all<Size>(
+        fixedSize: WidgetStateProperty.all<Size>(
           const Size.fromHeight(35),
         ),
       ),

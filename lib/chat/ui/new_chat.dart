@@ -1,14 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ayna_chat/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:ayna_chat/sqlite/database_helper.dart';
 import 'package:ayna_chat/widgets/custom_long_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:ayna_chat/widgets/logout_button.dart';
 import 'package:ayna_chat/widgets/text_form_field.dart';
-import 'package:go_router/go_router.dart';
 
 class NewChat extends StatelessWidget {
   const NewChat({
@@ -26,7 +23,7 @@ class NewChat extends StatelessWidget {
         ),
         body: Container(
           padding: const EdgeInsets.all(8),
-          margin: EdgeInsets.all(8),
+          margin: const EdgeInsets.all(8),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

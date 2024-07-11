@@ -1,16 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:ayna_chat/chat/bloc/chat_bloc.dart';
 import 'package:ayna_chat/chat/ui/message_tile.dart';
-import 'package:ayna_chat/sqlite/database_helper.dart';
 import 'package:ayna_chat/widgets/custom_small_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:ayna_chat/widgets/logout_button.dart';
 import 'package:ayna_chat/widgets/text_form_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'dart:developer';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hexcolor/hexcolor.dart';
 
 class ChatWithReceiver extends StatefulWidget {
   String receiver;
@@ -46,7 +42,7 @@ class _ChatWithReceiverState extends State<ChatWithReceiver> {
           case ChatSendingState:
             return Scaffold(
               appBar: AppBar(
-                title: CustomText(text: widget.receiver, size: 22),
+                title: CustomText(text: widget.receiver, size: 18),
                 actions: const [LogoutButton()],
               ),
               body: const Center(child: CircularProgressIndicator()),
@@ -60,22 +56,27 @@ class _ChatWithReceiverState extends State<ChatWithReceiver> {
             });
             return Scaffold(
               appBar: AppBar(
-                title: CustomText(text: widget.receiver, size: 22),
+                title: CustomText(text: widget.receiver, size: 18),
                 actions: const [LogoutButton()],
               ),
               body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      children: [
-                        Center(
-                          child: CustomText(
-                              text: " Conversation with ${widget.receiver}",
-                              size: 20),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: CustomText(
+                                  text: " Conversation with ${widget.receiver}",
+                                  size: 14),
+                            ),
+                            ...conversationWidgets
+                          ],
                         ),
-                        ...conversationWidgets
-                      ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -112,22 +113,27 @@ class _ChatWithReceiverState extends State<ChatWithReceiver> {
             });
             return Scaffold(
               appBar: AppBar(
-                title: CustomText(text: widget.receiver, size: 22),
+                title: CustomText(text: widget.receiver, size: 18),
                 actions: const [LogoutButton()],
               ),
               body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      children: [
-                        Center(
-                          child: CustomText(
-                              text: " Conversation with ${widget.receiver}",
-                              size: 20),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: CustomText(
+                                  text: " Conversation with ${widget.receiver}",
+                                  size: 14),
+                            ),
+                            ...conversationWidgets
+                          ],
                         ),
-                        ...conversationWidgets
-                      ],
+                      ),
                     ),
                     Column(
                       children: [
@@ -163,7 +169,7 @@ class _ChatWithReceiverState extends State<ChatWithReceiver> {
           default:
             return Scaffold(
               appBar: AppBar(
-                title: CustomText(text: widget.receiver, size: 22),
+                title: CustomText(text: widget.receiver, size: 18),
                 actions: const [LogoutButton()],
               ),
               body: Column(children: [

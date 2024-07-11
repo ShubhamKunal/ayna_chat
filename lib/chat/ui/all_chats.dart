@@ -2,7 +2,6 @@ import 'package:ayna_chat/chat/bloc/chat_bloc.dart';
 import 'package:ayna_chat/chat/ui/chat_tile.dart';
 import 'package:ayna_chat/chat/ui/chat_with_receiver.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,11 +61,11 @@ class _AllChatsState extends State<AllChats> {
                   });
             }
           case ChatErrorState:
-            return Column(
+            return const Column(
               children: [Text("Chats Error case")],
             );
           default:
-            return Column(
+            return const Column(
               children: [Text("Chats Default case")],
             );
         }

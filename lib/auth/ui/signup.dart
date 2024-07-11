@@ -1,9 +1,7 @@
-import 'package:ayna_chat/auth/authentication_repository.dart';
 import 'package:ayna_chat/auth/bloc/auth_bloc.dart';
 import 'package:ayna_chat/widgets/custom_long_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:ayna_chat/widgets/text_form_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:developer';

@@ -1,11 +1,9 @@
-import 'package:ayna_chat/auth/authentication_repository.dart';
 import 'package:ayna_chat/sqlite/database_helper.dart';
 import 'package:ayna_chat/widgets/custom_small_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:ayna_chat/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
-import 'package:go_router/go_router.dart';
 
 class FillPersonalData extends StatefulWidget {
   const FillPersonalData({super.key});
@@ -35,7 +33,7 @@ class _FillPersonalDataState extends State<FillPersonalData> {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(8),
-        margin: EdgeInsets.all(8),
+        margin: const EdgeInsets.all(8),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

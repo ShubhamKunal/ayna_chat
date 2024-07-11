@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'chat_bloc.dart';
 
 @immutable
@@ -18,4 +17,9 @@ class ChatSendEvent extends ChatEvent {
 class ChatSessionEvent extends ChatEvent {
   String receiver;
   ChatSessionEvent({required this.receiver});
+}
+
+class ChatEchoEvent extends ChatEvent {
+  List<String> messages;
+  ChatEchoEvent({required this.messages});
 }

@@ -1,8 +1,5 @@
-import 'package:ayna_chat/router/routes.dart';
-import 'package:ayna_chat/sqlite/database_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:developer';
 import '../../utils/functions.dart' as functions;
 import 'package:flutter/material.dart';
 
@@ -26,6 +23,7 @@ class AuthenticationRepository {
     } on FirebaseAuthException catch (e) {
       functions.showSnackbarWithColor(context, e.code, Colors.red);
     }
+    return null;
   }
 
   Future<User?> logIn(
@@ -41,6 +39,7 @@ class AuthenticationRepository {
     } on FirebaseAuthException catch (e) {
       functions.showSnackbarWithColor(context, e.code, Colors.red);
     }
+    return null;
   }
 
   Future<void> logOut(BuildContext context) async {

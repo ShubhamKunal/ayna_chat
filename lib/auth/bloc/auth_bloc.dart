@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:developer';
-import '../../utils/functions.dart' as functions;
 import 'package:meta/meta.dart';
 
 part 'auth_event.dart';

@@ -1,12 +1,9 @@
 import 'dart:async';
-
-import 'package:ayna_chat/chat/model/chat.dart';
 import 'package:ayna_chat/sqlite/database_helper.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:ayna_chat/utils/functions.dart' as functions;
 import 'package:meta/meta.dart';
-import 'dart:developer';
 part 'chat_event.dart';
 part 'chat_state.dart';
 
@@ -15,13 +12,14 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     on<ChatLoadingEvent>(chatLoadingEvent);
     on<ChatSendEvent>(chatSendEvent);
     on<ChatSessionEvent>(chatSessionEvent);
+    on<ChatEchoEvent>(chatEchoEvent);
   }
 
   FutureOr<void> chatLoadingEvent(
       ChatLoadingEvent event, Emitter<ChatState> emit) async {
     List<String> myReceivers = [];
     emit(ChatLoadingState());
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       await ChatDB().getDistinctConversationUsers().then((conversations) {
         myReceivers.addAll(conversations);
@@ -36,7 +34,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       ChatSendEvent event, Emitter<ChatState> emit) async {
     emit(ChatSendingState());
     List conversation = [];
-    //TODO: SENDING OF CHAT
     try {
       await ChatDB().insertChat({
         "sender": FirebaseAuth.instance.currentUser!.email ?? "user",
@@ -88,5 +85,39 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
 
     emit(ChatSessionLoadedState(conversation: conversation));
+  }
+
+  FutureOr<void> chatEchoEvent(
+      ChatEchoEvent event, Emitter<ChatState> emit) async {
+    emit(ChatLoadingState());
+    try {
+      for (int i = 1; i < event.messages.length; i++) {
+        var message = event.messages[i];
+        if (message.startsWith("You:")) {
+          await ChatDB().insertChat({
+            "sender": FirebaseAuth.instance.currentUser!.email,
+            "receiver": functions.extractRequestId(event.messages[0]),
+            "text": message.split(':')[1],
+          });
+        } else {
+          await ChatDB().insertChat({
+            "sender": functions.extractRequestId(event.messages[0]),
+            "receiver": FirebaseAuth.instance.currentUser!.email,
+            "text": message.split(':')[1],
+          });
+        }
+      }
+    } catch (e) {
+      emit(ChatErrorState());
+    }
+    List<String> myReceivers = [];
+    try {
+      await ChatDB().getDistinctConversationUsers().then((conversations) {
+        myReceivers.addAll(conversations);
+      });
+    } catch (e) {
+      emit(ChatErrorState());
+    }
+    emit(ChatLoadedState(receivers: myReceivers));
   }
 }

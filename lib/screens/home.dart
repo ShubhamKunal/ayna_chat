@@ -6,6 +6,7 @@ import 'package:ayna_chat/widgets/custom_small_button.dart';
 import 'package:ayna_chat/widgets/custom_text.dart';
 import 'package:ayna_chat/widgets/logout_button.dart';
 import 'package:ayna_chat/widgets/text_form_field.dart';
+import 'package:ayna_chat/utils/app_variables.dart' as variables;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
@@ -27,18 +28,16 @@ class _HomePageState extends State<HomePage> {
   Widget firstScreen = const AllChats();
 
   void navigateToChat() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const NewEcho()),
-    );
-    // final result = await Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => const NewChat()),
-    // );
-
-    if (result == true) {
-      log("triggered");
-      setState(() {});
+    if (variables.config == "ECHO") {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const NewEcho()),
+      );
+    } else {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const NewChat()),
+      );
     }
   }
 
@@ -64,7 +63,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    void _onItemTapped(int index) {
+    void onItemTapped(int index) {
       setState(() {
         currentIndex = index;
       });
@@ -127,7 +126,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.blue,
           unselectedItemColor: HexColor("#A3A7B7"),
-          onTap: _onItemTapped,
+          onTap: onItemTapped,
           showUnselectedLabels: true,
           currentIndex: currentIndex,
           elevation: 10.0,

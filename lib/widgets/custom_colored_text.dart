@@ -9,12 +9,12 @@ class CustomColoredText extends StatelessWidget {
   double size;
   double weight;
   CustomColoredText({
-    Key? key,
+    super.key,
     required this.text,
     required this.hexColor,
     required this.size,
     required this.weight,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

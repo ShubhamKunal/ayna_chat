@@ -10,3 +10,12 @@ void showSnackbarWithColor(
     ),
   );
 }
+
+String extractRequestId(String input) {
+  final regex = RegExp(r'Request served by (\w+)$');
+  final match = regex.firstMatch(input);
+  if (match != null && match.groupCount > 0) {
+    return match.group(1)!;
+  }
+  return '';
+}
