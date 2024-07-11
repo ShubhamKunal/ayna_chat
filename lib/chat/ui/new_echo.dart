@@ -56,7 +56,6 @@ class _NewEchoState extends State<NewEcho> {
         leading: IconButton(
             onPressed: () async {
               chatBloc.add(ChatEchoEvent(messages: messages));
-
               log(messages.toString());
               webSocketService.dispose();
               Navigator.pop(context, true);
